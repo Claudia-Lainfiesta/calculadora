@@ -27,7 +27,7 @@ def validar_operacion(operacion):
         return False
 
 # Ejemplo de uso
-operacion = "()(+ num1 num2)))"
+operacion = "(((+ num1 num2)))"
 if validar_operacion(operacion):
     print("La operación es válida.")
 else:
