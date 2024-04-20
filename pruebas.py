@@ -1,4 +1,4 @@
-importe math
+import math
 def validar_operacion(operacion):
     # Eliminar espacios en blanco y dividir la operación en una lista de caracteres
     operacion = operacion.replace(" ", "")
