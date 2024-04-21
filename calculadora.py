@@ -92,6 +92,32 @@ def operacion_factorial(num):
         contador = contador + 1
     return num_factorial
 
+def validar_operacion(operacion):
+    # Eliminar espacios en blanco y dividir la operación en una lista de caracteres
+    operacion = operacion.replace(" ", "")
+    caracteres = list(operacion)
+    
+    # Función recursiva para validar la estructura de los paréntesis
+    def validar_parentesis(caracteres, indice, contador):
+        # Caso base: si hemos recorrido todos los caracteres
+        if indice == len(caracteres):
+            return contador == 0
+        
+        # Si encontramos un paréntesis abierto, incrementamos el contador
+        if caracteres[indice] == "(":
+            return validar_parentesis(caracteres, indice + 1, contador + 1)
+        # Si encontramos un paréntesis cerrado, decrementamos el contador
+        elif caracteres[indice] == ")":
+            return validar_parentesis(caracteres, indice + 1, contador - 1)
+        # Si encontramos cualquier otro carácter, continuamos sin modificar el contador
+        else:
+            return validar_parentesis(caracteres, indice + 1, contador)
+    
+    # Verificar que los paréntesis iniciales y finales sean correctos
+    if caracteres[0] == "(" and caracteres[-1] == ")" and caracteres.count("(") == caracteres.count(")"):
+        return validar_parentesis(caracteres, 0, 0)
+    else:
+        return False
 def main():
     #Inicio de programa, información básica
     print("CREADORES: ")
@@ -110,77 +136,81 @@ def main():
         listanum = operacion.split()
         #Despliega la lista separada
         #print("Lista split", listanum)
-        #If que verifica si el usuario desea salir del programa
-        if operacion == "quit":
-            print("Saliendo del programa...")
-            print("Gracias por usar CODECALC")
-            break
-        #If que valida si el usuario ingreso una operación o solamente un número
-        elif len(listanum) == 3:
-            #División de lista
-            parte1 = listanum[0] #(operador
-            parte2 = listanum[1] #num1
-            parte3 = listanum[2] #num2)
-            #División de cada string
-            parentesisO = parte1[0]
-            operador = parte1[1]
-            num1 = float(parte2[0])
-            num2 = float(parte3[0])
-            parentesisF = parte3[1]
-            #If para valida primero si tiene paréntesis al inicio y final, y luego verificar todas las operacion con dos números en su sintaxis
-            if parentesisO == "(" and parentesisF == ")":
-                #If para validar cada uno de los signo y realizar la operación correspondiente
-                if operador == "+":
-                    resultado = operacion_suma(num1, num2)
-                    print("resultado>> ", resultado)
-                elif operador == "-":
-                    resultado = operacion_resta(num1, num2)
-                    print("resultado>> ", resultado)
-                elif operador == "*":
-                    resultado = operacion_multiplicacion(num1, num2)
-                    print("resultado>> ", resultado)
-                elif operador == "/":
-                    if num2 > 0:
-                        resultado = operacion_division(num1, num2)
+        if validar_operacion(operacion):
+            #If que verifica si el usuario desea salir del programa
+            if operacion == "quit":
+                print("Saliendo del programa...")
+                print("Gracias por usar CODECALC")
+                break
+            #If que valida si el usuario ingreso una operación o solamente un número
+            elif len(listanum) == 3:
+                #División de lista
+                parte1 = listanum[0] #(operador
+                parte2 = listanum[1] #num1
+                parte3 = listanum[2] #num2)
+                #División de cada string
+                parentesisO = parte1[0]
+                operador = parte1[1]
+                num1 = float(parte2[0])
+                num2 = float(parte3[0])
+                parentesisF = parte3[1]
+                #If para valida primero si tiene paréntesis al inicio y final, y luego verificar todas las operacion con dos números en su sintaxis
+                if parentesisO == "(" and parentesisF == ")":
+                    #If para validar cada uno de los signo y realizar la operación correspondiente
+                    if operador == "+":
+                        resultado = operacion_suma(num1, num2)
                         print("resultado>> ", resultado)
-                    else:
-                        print("ERROR! División entre cero.")
+                    elif operador == "-":
+                        resultado = operacion_resta(num1, num2)
+                        print("resultado>> ", resultado)
+                    elif operador == "*":
+                        resultado = operacion_multiplicacion(num1, num2)
+                        print("resultado>> ", resultado)
+                    elif operador == "/":
+                        if num2 > 0:
+                            resultado = operacion_division(num1, num2)
+                            print("resultado>> ", resultado)
+                        else:
+                            print("ERROR! División entre cero.")
+                else:
+                    print("¡ERROR! Expresión no válida.")
+            elif len(listanum) == 2:
+                #División de lista
+                parte1 = listanum[0] #(operador
+                parte2 = listanum[1] #num1)
+                #División de cada string
+                parentesisO = parte1[0]
+                operador = parte1[1]
+                num = float(parte2[0])
+                parentesisF = parte2[1]
+                #If para valida primero si tiene paréntesis al inicio y final, y luego verificar todas las operacion con dos números en su sintaxis
+                if parentesisO == "(" and parentesisF == ")":
+                    #If para validar cada uno de los signo y realizar la operación correspondiente
+                    if operador == "sqroot":
+                        #if num1 >= 0:
+                        resultado = operacion_raiz(num)
+                        print("resultado>> ", resultado)
+                        #else:
+                        #print("ERROR! Raiz cuadrada negativa")
+                    elif operador == "sqr":
+                        resultado = operacion_cuadrado(num)
+                        print("resultado>> ", resultado)
+                    elif operador == "sin":
+                        resultado = operacion_seno(num)
+                        print("resultado>> ", resultado)
+                    elif operador == "cos":
+                        resultado = operacion_coseno(num)
+                        print("resultado>> ", resultado)
+                    elif operador == "tan":
+                        resultado = operacion_tangente(num)
+                        print("resultado>> ", resultado)
+                else:
+                    print("¡ERROR! Expresión no válida.")
+            elif len(listanum) == 1:
+                print("resultado>> ", operacion)
             else:
                 print("¡ERROR! Expresión no válida.")
-        elif len(listanum) == 2:
-            #División de lista
-            parte1 = listanum[0] #(operador
-            parte2 = listanum[1] #num1)
-            #División de cada string
-            parentesisO = parte1[0]
-            operador = parte1[1]
-            num = float(parte2[0])
-            parentesisF = parte2[1]
-            #If para valida primero si tiene paréntesis al inicio y final, y luego verificar todas las operacion con dos números en su sintaxis
-            if parentesisO == "(" and parentesisF == ")":
-                #If para validar cada uno de los signo y realizar la operación correspondiente
-                if operador == "sqroot":
-                    #if num1 >= 0:
-                    resultado = operacion_raiz(num)
-                    print("resultado>> ", resultado)
-                    #else:
-                    #print("ERROR! Raiz cuadrada negativa")
-                elif operador == "sqr":
-                    resultado = operacion_cuadrado(num)
-                    print("resultado>> ", resultado)
-                elif operador == "sin":
-                    resultado = operacion_seno(num)
-                    print("resultado>> ", resultado)
-                elif operador == "cos":
-                    resultado = operacion_coseno(num)
-                    print("resultado>> ", resultado)
-                elif operador == "tan":
-                    resultado = operacion_tangente(num)
-                    print("resultado>> ", resultado)
-            else:
-                print("¡ERROR! Expresión no válida.")
-        elif len(listanum) == 1:
-            print("resultado>> ", operacion)
         else:
-            print("¡ERROR! Expresión no válida.")
+             print("La operación no es válida.")
+
 main()
