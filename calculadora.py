@@ -1,6 +1,6 @@
 # Creadores:
-# Hamlet Penilla
-# María Claudia Lainfiesta Herrera
+# Hamlet Oswaldo Pernilla De Leon - 24007273 - BN
+# María Claudia Lainfiesta Herrera - 24000149 - BN
 
 #SUBRUTINAS DE OPERACIONES DE DOS NÚMEROS
 #Subrutina --> suma de números
@@ -109,7 +109,7 @@ def main():
         #Separación en lista de la operación
         listanum = operacion.split()
         #Despliega la lista separada
-        print("Lista split", listanum)
+        #print("Lista split", listanum)
         #If que verifica si el usuario desea salir del programa
         if operacion == "quit":
             print("Saliendo del programa...")
@@ -154,28 +154,28 @@ def main():
             #División de cada string
             parentesisO = parte1[0]
             operador = parte1[1]
-            num1 = float(parte2[0])
+            num = float(parte2[0])
             parentesisF = parte2[1]
             #If para valida primero si tiene paréntesis al inicio y final, y luego verificar todas las operacion con dos números en su sintaxis
             if parentesisO == "(" and parentesisF == ")":
                 #If para validar cada uno de los signo y realizar la operación correspondiente
                 if operador == "sqroot":
-                    if num1 >= 0:
-                        resultado = operacion_raiz(num1)
-                        print("resultado>> ", resultado)
-                    else:
-                        print("ERROR! Raiz cuadrada negativa")
+                    #if num1 >= 0:
+                    resultado = operacion_raiz(num)
+                    print("resultado>> ", resultado)
+                    #else:
+                    #print("ERROR! Raiz cuadrada negativa")
                 elif operador == "sqr":
-                    resultado = operacion_cuadrado(num1)
+                    resultado = operacion_cuadrado(num)
                     print("resultado>> ", resultado)
                 elif operador == "sin":
-                    resultado = operacion_seno(num1)
+                    resultado = operacion_seno(num)
                     print("resultado>> ", resultado)
                 elif operador == "cos":
-                    resultado = operacion_coseno(num1)
+                    resultado = operacion_coseno(num)
                     print("resultado>> ", resultado)
                 elif operador == "tan":
-                    resultado = operacion_tangente(num1)
+                    resultado = operacion_tangente(num)
                     print("resultado>> ", resultado)
             else:
                 print("¡ERROR! Expresión no válida.")
