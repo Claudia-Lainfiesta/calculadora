@@ -2,7 +2,7 @@
 # Hamlet Penilla
 # María Claudia Lainfiesta Herrera
 
-#SUBRUTINAS DE OPERACIONES
+#SUBRUTINAS DE OPERACIONES DE DOS NÚMEROS
 #Subrutina --> suma de números
 def operacion_suma(num1, num2):
     suma = num1 + num2
@@ -22,30 +22,76 @@ def operacion_multiplicacion(num1, num2):
 def operacion_division(num1, num2):
     division = num1 // num2
     return division
-def operacion_raiz(num1):
-    suma = num1
-    return suma
 
-def operacion_cuadrado(num1):
-    suma = num1
-    return suma
+#SUBRUTINAS DE OPERACIONES DE UN NÚMERO
+#Subrutina --> raíz de número
+def operacion_raiz(num):
+    from math import sqrt
+    num_raiz = sqrt(num)
+    return num_raiz
 
-def operacion_seno(num1):
-    suma = num1
-    return suma
+#Subrutina --> al cuadrado de número
+def operacion_cuadrado(num):
+    num_cuadrado = num * num
+    return num_cuadrado
 
-def operacion_coseno(num1):
-    suma = num1
-    return suma
+#Subrutina --> seno de número
+def operacion_seno(num):
+    from math import sin
+    from math import pi
+    numero1 = (num * pi)/180
+    num_sen =float(sin(numero1))
+    num_seno = round(num_sen, 5)
+    return num_seno
 
-def operacion_tangente(num1):
-    suma = num1
-    return suma
+#Subrutina --> coseno de número
+def operacion_coseno(num):
+    from math import cos
+    from math import pi
+    numero1 = (num * pi)/180
+    num_cosen = cos(numero1)
+    num_coseno = round(num_cosen, 5)
+    return num_coseno
 
-#SUBRUTINAS Claudia
-def recursividad1(parentesisO, paretesisF, num1):
-    for i in parentesisO:
-        if parentesisO == "(" and paretesisF == ")" and num1 
+#Subrutina --> tangente de número
+def operacion_tangente(num):
+    from math import tan
+    from math import pi
+    if (operacion_coseno(num)) == 0:
+        error_division = "Indefinido"
+        return error_division
+    else:
+        num_tangente = (operacion_seno(num)) / (operacion_coseno(num))
+        return num_tangente
+
+#SUBRUTINAS DE OPERACIONES ESPECIALES
+#Subrutina --> cociente de números
+def operacion_cociente(num1, num2):
+    if num2 == 0:
+        error_division = "Indefinido"
+        return error_division
+    else:
+        num_cociente = num1 // num2
+        return num_cociente
+
+#Subrutina --> residuo de números
+def operacion_residuo(num1, num2):
+    if num2 == 0:
+        error_division = "Indefinido"
+        return error_division
+    else:
+        num_residuo = num1 % num2
+        return num_residuo
+
+#Subrutina --> factorial de un número
+def operacion_factorial(num):
+    num_factorial = 1
+    contador = 1
+    while contador <= num:
+        num_factorial = num_factorial * contador
+        contador = contador + 1
+    return num_factorial
+
 def main():
     #Inicio de programa, información básica
     print("CREADORES: ")
@@ -57,26 +103,23 @@ def main():
     print("Por ejemplo: (+ 1 2)")
     print("--------------------------------------------------------------------------")
 
-    #Ingreso de operación desde el usuario
-    operacion = input("calculadora>> ")
-
-    #Separación en lista de la operación
-    listanum = operacion.split()
-    while operacion == "quit":
-        print("Saliendo...")
-        break
-    else:
+    while True:
+        #Ingreso de operación desde el usuario
+        operacion = input("calculadora>> ")
+        #Separación en lista de la operación
+        listanum = operacion.split()
         #Despliega la lista separada
         print("Lista split", listanum)
-
-
+        #If que verifica si el usuario desea salir del programa
+        if operacion == "quit":
+            print("Saliendo del programa, hasta luego...")
+            break
         #If que valida si el usuario ingreso una operación o solamente un número
-        if len(listanum) == 3:
+        elif len(listanum) == 3:
             #División de lista
             parte1 = listanum[0] #(operador
             parte2 = listanum[1] #num1
             parte3 = listanum[2] #num2)
-
             #División de cada string
             parentesisO = parte1[0]
             operador = parte1[1]
@@ -96,15 +139,17 @@ def main():
                     resultado = operacion_multiplicacion(num1, num2)
                     print("resultado>> ", resultado)
                 elif operador == "/":
-                    resultado = operacion_division(num1, num2)
-                    print("resultado>> ", resultado)
+                    if num2 > 0:
+                        resultado = operacion_division(num1, num2)
+                        print("resultado>> ", resultado)
+                    else:
+                        print("ERROR! División entre cero.")
             else:
                 print("¡ERROR! Expresión no válida.")
         elif len(listanum) == 2:
             #División de lista
             parte1 = listanum[0] #(operador
             parte2 = listanum[1] #num1)
-
             #División de cada string
             parentesisO = parte1[0]
             operador = parte1[1]
@@ -114,8 +159,11 @@ def main():
             if parentesisO == "(" and parentesisF == ")":
                 #If para validar cada uno de los signo y realizar la operación correspondiente
                 if operador == "sqroot":
-                    resultado = operacion_raiz(num1)
-                    print("resultado>> ", resultado)
+                    if num1 >= 0:
+                        resultado = operacion_raiz(num1)
+                        print("resultado>> ", resultado)
+                    else:
+                        print("ERROR! Raiz cuadrada negativa")
                 elif operador == "sqr":
                     resultado = operacion_cuadrado(num1)
                     print("resultado>> ", resultado)
