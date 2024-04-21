@@ -112,7 +112,8 @@ def main():
         print("Lista split", listanum)
         #If que verifica si el usuario desea salir del programa
         if operacion == "quit":
-            print("Saliendo del programa, hasta luego...")
+            print("Saliendo del programa...")
+            print("Gracias por usar CODECALC")
             break
         #If que valida si el usuario ingreso una operación o solamente un número
         elif len(listanum) == 3:
