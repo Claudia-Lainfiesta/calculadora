@@ -92,7 +92,75 @@ def operacion_factorial(num):
         num_factorial = num_factorial * contador
         contador = contador + 1
     return num_factorial
+#SUBRUTINA DE VALIDACIÓN
+def evaluacion(operacion):
+    lista = operacion.split()
+        #IF para validar cuantos elementos tiene la lista y saber como proceder
+    if len(lista) == 1 and operacion == "quit":
+        print("Saliendo del programa...")
+        print("Gracias por usar CODECALC.")
+        return None
+    elif len(lista) == 2 and operacion != "quit":
+        #Separación de las dos partes principales
+        parte1 = lista[0]
+        parte2 = lista[1]
+        #Separación de cada uno de los caracteres
+        parentesisO = parte1[0]
+        signo = parte1[1:]
+        num = float(parte2[:-1])
+        parentesisO = parte2[-1]
+        #*print(lista, parte1, parte2, parentesisO, signo, num)
+        #IF para cada uno de las opciones de operaciones con un número
+        if signo == "sqroot":
+            #IF el número del usuario es positivo o 0 se realizara la operacion.
+            if num >= 0:
+                return operacion_raiz(num)
+            else:
+                return "ERROR! Raiz negativa"
+        elif signo == "sqr":
+            return operacion_cuadrado(num)
+        elif signo == "sin":
+            return operacion_seno(num)
+        elif signo == "cos":
+            return operacion_coseno(num)
+        elif signo == "tan":
+            return operacion_tangente(num)
+        elif signo == "!":
+            return operacion_factorial(num)
 
+        else:
+            return "Operación no válida."
+    elif len(lista) == 3 and operacion != "quit":
+        #Separación de las tres partes principales
+        parte1 = lista[0]
+        parte2 = lista[1]
+        parte3 = lista[2]
+        #Separación de cada uno de los caracteres
+        parentesisO = parte1[0]
+        signo = parte1[1:]
+        num1 = float(parte2[0:])
+        num2 = float(parte3[:-1])
+        parentesisF = parte3[-1]
+        print(parentesisO,signo,num1,num2,parentesisF)
+        if signo == "+":
+            return operacion_suma(num1, num2)
+        elif signo == "-":
+            return operacion_resta(num1, num2)
+        elif signo == "*":
+            return operacion_multiplicacion(num1, num2)
+        elif signo == "/":
+            if num2 != 0:
+                return operacion_division(num1, num2)
+            else:
+                return "ERROR! Divisón entre 0"
+        elif signo == "div":
+            return operacion_cociente(num1, num2)
+        elif signo == "%":
+            return operacion_residuo(num1, num2)
+        else:
+               return "ERROR! Operación no valida"
+    else:
+        return "ERROR!"
 
 #--------------------------------------------------------------------------------------------------------
 def main():
@@ -105,84 +173,12 @@ def main():
     while True:
         #Petición de operación a usuario guardandose en variable "operacion"
         operacion = input("calculadora>> ")
-        lista = operacion.split()
-        #IF para validar cuantos elementos tiene la lista y saber como proceder
-        if len(lista) == 1 and operacion == "quit":
+        if operacion == "quit":
             print("Saliendo del programa...")
             print("Gracias por usar CODECALC.")
             break
-        elif len(lista) == 2 and operacion != "quit":
-            #Separación de las dos partes principales
-            parte1 = lista[0]
-            parte2 = lista[1]
-            #Separación de cada uno de los caracteres
-            parentesisO = parte1[0]
-            signo = parte1[1:]
-            num = float(parte2[:-1])
-            parentesisO = parte2[-1]
-            #*print(lista, parte1, parte2, parentesisO, signo, num)
-            #IF para cada uno de las opciones de operaciones con un número
-            if signo == "sqroot":
-                #IF el número del usuario es positivo o 0 se realizara la operacion.
-                if num >= 0:
-                    resultado = operacion_raiz(num)
-                    print("resultado>> ", resultado)
-                else:
-                    print("ERROR! Raiz negativa")
-            elif signo == "sqr":
-                resultado = operacion_cuadrado(num)
-                print("resultado>> ", resultado)
-            elif signo == "sin":
-                resultado = operacion_seno(num)
-                print("resultado>> ", resultado)
-            elif signo == "cos":
-                resultado = operacion_coseno(num)
-                print("resultado>> ", resultado)
-            elif signo == "tan":
-                resultado = operacion_tangente(num)
-                print("resultado>> ", resultado)
-            elif signo == "!":
-                resultado = operacion_factorial(num)
-                print("resultado>> ", resultado)
-            else:
-                print("Operación no válida.")
-        elif len(lista) == 3 and operacion != "quit":
-            #Separación de las tres partes principales
-            parte1 = lista[0]
-            parte2 = lista[1]
-            parte3 = lista[2]
-            #Separación de cada uno de los caracteres
-            parentesisO = parte1[0]
-            signo = parte1[1:]
-            num1 = float(parte2[0:])
-            num2 = float(parte3[:-1])
-            parentesisF = parte3[-1]
-            print(parentesisO,signo,num1,num2,parentesisF)
-            if signo == "+":
-                resultado = operacion_suma(num1, num2)
-                print("resultado>> ", resultado)
-            elif signo == "-":
-                resultado = operacion_resta(num1, num2)
-                print("resultado>> ", resultado)
-            elif signo == "*":
-                resultado = operacion_multiplicacion(num1, num2)
-                print("resultado>> ", resultado)
-            elif signo == "/":
-                if num2 != 0:
-                    resultado = operacion_division(num1, num2)
-                    print("resultado>> ", resultado)
-                else:
-                    print("ERROR! Divisón entre 0")
-            elif signo == "div":
-                resultado = operacion_cociente(num1, num2)
-                print("resultado>> ", resultado)
-            elif signo == "%":
-                resultado = operacion_residuo(num1, num2)
-                print("resultado>> ", resultado)
-            else:
-                print("ERROR! Operación no valida")
         else:
-            print("ERROR!")
-
+            resultado = evaluacion(operacion)
+            print("resultado>>", resultado)
 
 main()
