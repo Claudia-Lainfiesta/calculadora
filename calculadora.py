@@ -110,60 +110,64 @@ def operacion_factorial(num):
 #SUBRUTINA DE VALIDACIÓN
 def evaluacion(operacion):
     lista = operacion.split()
-    #IF para validar cuantos elementos tiene la lista y saber como proceder
-    if len(lista) == 2 and operacion != "quit":
-        #Separación de las dos partes principales
-        parte1 = lista[0]
-        parte2 = lista[1]
-        #Separación de cada uno de los caracteres
-        parentesisO = parte1[0]
-        signo = parte1[1:]
-        num = float(parte2[:-1])
-        parentesisO = parte2[-1]
-        #IF para cada uno de las opciones de operaciones con un número
-        if signo == "sqroot":
-            return operacion_raiz(num)
-        elif signo == "sqr":
-            return operacion_cuadrado(num)
-        elif signo == "sin":
-            return operacion_seno(num)
-        elif signo == "cos":
-            return operacion_coseno(num)
-        elif signo == "tan":
-            return operacion_tangente(num)
-        elif signo == "!":
-            return operacion_factorial(num)
+    print(lista)
+    #Si el usuario ingresa algo que no sea un numero no realizara la operación
+    try:
+        #IF para validar cuantos elementos tiene la lista y saber como proceder
+        if len(lista) == 2 and operacion != "quit":
+            #Separación de las dos partes principales
+            parte1 = lista[0]
+            parte2 = lista[1]
+            #Separación de cada uno de los caracteres
+            parentesisO = parte1[0]
+            signo = parte1[1:]
+            num = float(parte2[:-1])
+            parentesisO = parte2[-1]
+            #IF para cada uno de las opciones de operaciones con un número
+            if signo == "sqroot":
+                return operacion_raiz(num)
+            elif signo == "sqr":
+                return operacion_cuadrado(num)
+            elif signo == "sin":
+                return operacion_seno(num)
+            elif signo == "cos":
+                return operacion_coseno(num)
+            elif signo == "tan":
+                return operacion_tangente(num)
+            elif signo == "!":
+                return operacion_factorial(num)
+            else:
+                return "Operación no válida."
+        elif len(lista) == 3 and operacion != "quit":
+            #Separación de las tres partes principales
+            parte1 = lista[0]
+            parte2 = lista[1]
+            parte3 = lista[2]
+            #Separación de cada uno de los caracteres
+            parentesisO = parte1[0]
+            signo = parte1[1:]
+            num1 = float(parte2[0:])
+            num2 = float(parte3[:-1])
+            parentesisF = parte3[-1]
+            print(parentesisO,signo,num1,num2,parentesisF)
+            if signo == "+":
+                return operacion_suma(num1, num2)
+            elif signo == "-":
+                return operacion_resta(num1, num2)
+            elif signo == "*":
+                return operacion_multiplicacion(num1, num2)
+            elif signo == "/":
+                return operacion_division(num1, num2)
+            elif signo == "div":
+                return operacion_cociente(num1, num2)
+            elif signo == "%":
+                return operacion_residuo(num1, num2)
+            else:
+                return "ERROR! Operación no valida"
         else:
-            return "Operación no válida."
-    elif len(lista) == 3 and operacion != "quit":
-        #Separación de las tres partes principales
-        parte1 = lista[0]
-        parte2 = lista[1]
-        parte3 = lista[2]
-        #Separación de cada uno de los caracteres
-        parentesisO = parte1[0]
-        signo = parte1[1:]
-        num1 = float(parte2[0:])
-        num2 = float(parte3[:-1])
-        parentesisF = parte3[-1]
-        print(parentesisO,signo,num1,num2,parentesisF)
-        if signo == "+":
-            return operacion_suma(num1, num2)
-        elif signo == "-":
-            return operacion_resta(num1, num2)
-        elif signo == "*":
-            return operacion_multiplicacion(num1, num2)
-        elif signo == "/":
-            return operacion_division(num1, num2)
-        elif signo == "div":
-            return operacion_cociente(num1, num2)
-        elif signo == "%":
-            return operacion_residuo(num1, num2)
-        else:
-               return "ERROR! Operación no valida"
-    else:
+            return "ERROR! Operación no válida"
+    except ValueError:
         return "ERROR! Operación no válida"
-
 #-------------------------------------------------------------------------------------------
 #SUBRUTINA PRINCIPAL
 def main():
