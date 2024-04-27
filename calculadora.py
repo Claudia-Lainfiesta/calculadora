@@ -6,7 +6,7 @@
 #Subrutina --> suma de números
 def operacion_suma(num1, num2):
     suma = num1 + num2
-    return suma
+    return suma 
 
 #Subrutina --> resta de  números
 def operacion_resta(num1, num2):
@@ -21,7 +21,7 @@ def operacion_multiplicacion(num1, num2):
 #Subrutina --> división de  números
 def operacion_division(num1, num2):
     if num2 == 0:
-        error_division = "Indefinido"
+        error_division = "ERROR! "+ str(num1) + " dividido " + str(num2) + " es indefinido."
         return error_division
     else:
         division = num1 / num2
@@ -35,7 +35,7 @@ def operacion_raiz(num):
         num_raiz = sqrt(num)
         return num_raiz
     else:
-        error_raiz = "Indefinido"
+        error_raiz = "ERROR! el número " + str(num) + " es indefinido por ser negativo."
         return error_raiz
 
 #Subrutina --> al cuadrado de número
@@ -66,7 +66,7 @@ def operacion_tangente(num):
     from math import tan
     from math import pi
     if (operacion_coseno(num)) == 0:
-        error_division = "Indefinido"
+        error_division = "ERROR! la tangente de " + str(num) + " es indefinido."
         return error_division
     else:
         num_tangente = (operacion_seno(num)) / (operacion_coseno(num))
@@ -76,7 +76,7 @@ def operacion_tangente(num):
 #Subrutina --> cociente de números
 def operacion_cociente(num1, num2):
     if num2 == 0:
-        error_division = "Indefinido"
+        error_division = "ERROR! el cociente de "+ str(num1) + " entre " + str(num2) + " es indefinido."
         return error_division
     else:
         num_cociente = num1 // num2
@@ -85,7 +85,7 @@ def operacion_cociente(num1, num2):
 #Subrutina --> residuo de números
 def operacion_residuo(num1, num2):
     if num2 == 0:
-        error_division = "Indefinido"
+        error_division = "ERROR! el residuo de "+ str(num1) + " entre " + str(num2) + " es indefinido."
         return error_division
     else:
         num_residuo = num1 % num2
@@ -97,7 +97,7 @@ def operacion_factorial(num):
         cero_f = 1
         return cero_f
     elif num < 0:
-        fact_negativo = "No es un entero Positivo"
+        fact_negativo = "ERROR! " + str(num) + " no es un entero positivo"
         return fact_negativo
     else:
         num_factorial = 1
@@ -109,20 +109,25 @@ def operacion_factorial(num):
 #-----------------------------------------------------------------------------
 #SUBRUTINA DE VALIDACIÓN DE CANTIDADES DE PARENTESIS
 def validar_parentesis(lista):
+    #Almacenamiento de datos requeridos para validar en variables
     letra = "("
     letra2 = ")"
+    #Contadores con valor inicial en 0
     contador1 = 0
     contador2 = 0
     resultado1 = 0
     resultado2 = 0
+    #While que cuente el numero de paréntesis iniciales "("
     while contador1 < len(lista):
         if lista[contador1] == letra:
             resultado1 += 1
         contador1 += 1
+    #While que cuente el numero de paréntesis finales ")"
     while contador2 < len(lista):
         if lista[contador2] == letra2:
             resultado2 += 1
         contador2 += 1
+    #If que compare los números de paréntesis iniciales y finales
     if resultado1 == resultado2:
         a = "valida"
         return a
@@ -180,7 +185,7 @@ def evaluacion(operacion):
                 num1 = float(parte2[0:])
                 num2 = float(parte3[:-1])
                 parentesisF = parte3[-1]
-                print(parentesisO,signo,num1,num2,parentesisF)
+                #print(parentesisO,signo,num1,num2,parentesisF)
                 if signo == "+":
                     return operacion_suma(num1, num2)
                 elif signo == "-":
@@ -200,7 +205,7 @@ def evaluacion(operacion):
         elif validacionparentesis == "invalida":
             return "ERROR! Los parentesis no son válidos"
     except ValueError:
-        return "ERROR! Operación no válida"
+        return "ERROR! Operación no válida, debe llevar parentesis su operación"
 #-------------------------------------------------------------------------------------------
 #SUBRUTINA PRINCIPAL
 def main():
