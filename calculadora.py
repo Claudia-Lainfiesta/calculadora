@@ -107,7 +107,6 @@ def operacion_factorial(num):
             contador = contador + 1
         return num_factorial
 #-----------------------------------------------------------------------------
-#hola
 #SUBRUTINA DE VALIDACIÓN DE CANTIDADES DE PARENTESIS
 def validar_parentesis(lista):
     letra = "("
