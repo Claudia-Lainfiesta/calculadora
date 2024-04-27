@@ -6,7 +6,7 @@
 #Subrutina --> suma de números
 def operacion_suma(num1, num2):
     suma = num1 + num2
-    return suma 
+    return suma
 
 #Subrutina --> resta de  números
 def operacion_resta(num1, num2):
@@ -20,6 +20,7 @@ def operacion_multiplicacion(num1, num2):
 
 #Subrutina --> división de  números
 def operacion_division(num1, num2):
+    #If que valida que el segundo numero 0 o no.
     if num2 == 0:
         error_division = "ERROR! "+ str(num1) + " dividido " + str(num2) + " es indefinido."
         return error_division
@@ -31,6 +32,7 @@ def operacion_division(num1, num2):
 #Subrutina --> raíz de número
 def operacion_raiz(num):
     from math import sqrt
+    #If que valida que el numero no sea negativo
     if num >= 0:
         num_raiz = sqrt(num)
         return num_raiz
@@ -47,6 +49,7 @@ def operacion_cuadrado(num):
 def operacion_seno(num):
     from math import sin
     from math import pi
+    #Conversión del numero
     numero1 = (num * pi)/180
     num_sen =float(sin(numero1))
     num_seno = round(num_sen, 5)
@@ -56,6 +59,7 @@ def operacion_seno(num):
 def operacion_coseno(num):
     from math import cos
     from math import pi
+    #Conversión del numero
     numero1 = (num * pi)/180
     num_cosen = cos(numero1)
     num_coseno = round(num_cosen, 5)
@@ -65,6 +69,7 @@ def operacion_coseno(num):
 def operacion_tangente(num):
     from math import tan
     from math import pi
+    #If que valida que la respuesta sea indefinida o no
     if (operacion_coseno(num)) == 0:
         error_division = "ERROR! la tangente de " + str(num) + " es indefinido."
         return error_division
@@ -75,6 +80,7 @@ def operacion_tangente(num):
 #SUBRUTINAS DE OPERACIONES ESPECIALES
 #Subrutina --> cociente de números
 def operacion_cociente(num1, num2):
+    #If que valida que el segundo numero sea 0 no
     if num2 == 0:
         error_division = "ERROR! el cociente de "+ str(num1) + " entre " + str(num2) + " es indefinido."
         return error_division
@@ -84,6 +90,7 @@ def operacion_cociente(num1, num2):
 
 #Subrutina --> residuo de números
 def operacion_residuo(num1, num2):
+    #If que valida que el segundo numero sea 0 no
     if num2 == 0:
         error_division = "ERROR! el residuo de "+ str(num1) + " entre " + str(num2) + " es indefinido."
         return error_division
@@ -93,6 +100,7 @@ def operacion_residuo(num1, num2):
 
 #Subrutina --> factorial de un número
 def operacion_factorial(num):
+    #If qur valida primero que al ser 0 da resultado 1, luego si es negativo es error, de lo contrario se realiza la operación
     if num == 0:
         cero_f = 1
         return cero_f
