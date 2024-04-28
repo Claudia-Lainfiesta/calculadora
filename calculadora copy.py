@@ -185,18 +185,16 @@ def evaluacion(operacion):
                         return "Operación no válida."
                 else:
                     return "Operación no válida por parentesis"
-            elif len(lista) == 3 and operacion != "quit":
-                #Separación de las tres partes principales
-                parte1 = lista[0]
-                parte2 = lista[1]
-                parte3 = lista[2]
-                #Separación de cada uno de los caracteres
-                parentesisO = parte1[0]
-                signo = parte1[1:]
-                num1 = float(parte2[0:])
-                num2 = float(parte3[:-1])
-                parentesisF = parte3[-1]
-                #print(parentesisO,signo,num1,num2,parentesisF)
+            elif (len(lista)-1) % 2 == 0 and operacion != "quit":
+                mitad = len(lista) // 2
+                for i in range(1, mitad + 1):
+                    parte1 = lista[(i)*-1]
+                    parte2 = lista[(i * 2)*-2]
+                    parte1 = parte1[:((mitad)*-1)]
+                    num1 = float(parte2)
+                    num2 = float(parte1)
+                    signo = lista[((i * 2)*-1) - 1][1:]
+            
                 if parentesisO == "(" and parentesisF == ")":
                     if signo == "+":
                         return operacion_suma(num1, num2)
@@ -212,10 +210,12 @@ def evaluacion(operacion):
                         return operacion_residuo(num1, num2)
                     else:
                         return "ERROR! Operación no valida"
-                else:
-                    return "ERROR! Operación no válida por parentesis"
+                lista = lista[:(mitad*-1)]  # Eliminar el último elemento de la lista
+                lista[-1] = str(float(resultado)) + ")"  # Reemplazar el último elemento con el resultado
+                return  evaluacion(' '.join(lista)) # Devolver el resultado final como un número float
             else:
                 return "ERROR! Operación no válida"
+
         elif validacionparentesis == "invalida":
             return "ERROR! Los parentesis no son válidos"
     except ValueError:
