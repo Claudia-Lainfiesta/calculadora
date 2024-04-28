@@ -213,7 +213,7 @@ def evaluacion(operacion):
         elif validacionparentesis == "invalida":
             return "ERROR! Los parentesis no son válidos"
     except ValueError:
-        return "ERROR! Operación no válida, debe llevar parentesis su operación"
+        return "ERROR! Operación no válida."
 #-------------------------------------------------------------------------------------------
 #SUBRUTINA PRINCIPAL
 def main():
