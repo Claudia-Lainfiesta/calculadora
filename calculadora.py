@@ -116,41 +116,27 @@ def operacion_factorial(num):
         return num_factorial
 #-----------------------------------------------------------------------------
 #SUBRUTINA DE VALIDACIÓN DE CANTIDADES DE PARENTESIS
-def validar_parentesis(lista):
-    #Almacenamiento de datos requeridos para validar en variables
-    letra = "("
-    letra2 = ")"
-    #Contadores con valor inicial en 0
-    contador1 = 0
-    contador2 = 0
-    resultado1 = 0
-    resultado2 = 0
-    #While que cuente el numero de paréntesis iniciales "("
-    while contador1 < len(lista):
-        if lista[contador1] == letra:
-            resultado1 += 1
-        contador1 += 1
-    #While que cuente el numero de paréntesis finales ")"
-    while contador2 < len(lista):
-        if lista[contador2] == letra2:
-            resultado2 += 1
-        contador2 += 1
-    #If que compare los números de paréntesis iniciales y finales
-    if resultado1 == resultado2:
-        a = "valida"
-        return a
-    else:
-        b = "invalida"
-        return b
+def verificar_parentesis(lista):
+    pila = []
+
+    for caracter in lista:
+        if caracter == '(':
+            pila.append(caracter)
+        elif caracter == ')':
+            if not pila:
+                return False  # Hay un ')' sin un '(' correspondiente
+            pila.pop()  # Remover '(' de la pila
+
+    return len(pila) == 0  # La pila debe estar vacía para que los paréntesis estén balanceados
 #SUBRUTINA DE VALIDACIÓN DE OPERADORES
 def evaluacion(operacion):
     lista = operacion.split()
     #Almacenar en una variable el resultado de la subrutina de validación de cantidades de paréntesis
-    validacionparentesis = validar_parentesis(lista)
+    validacionparentesis = verificar_parentesis(lista)
     print(lista)
     #Si el usuario ingresa algo que no sea un numero no realizara la operación
     try:
-        if validacionparentesis == "valida":
+        if validacionparentesis == True:
             #IF para validar cuantos elementos tiene la lista y saber como proceder
             if len(lista) == 1 and operacion != "quit":
                 try:
@@ -216,7 +202,7 @@ def evaluacion(operacion):
                     return "ERROR! Operación no válida por parentesis"
             else:
                 return "ERROR! Operación no válida"
-        elif validacionparentesis == "invalida":
+        elif validacionparentesis == False:
             return "ERROR! Los parentesis no son válidos"
     except ValueError:
         return "ERROR! Operación no válida."
@@ -227,7 +213,7 @@ def main():
     print("CREADORES: ")
     print("Hamlet Oswaldo Pernilla De Leon - 24007273 - BN")
     print("María Claudia Lainfiesta Herrera - 24000149 - BN")
-    print("-------------------------------------------")
+    print("----------------------------------------------------")
     print("¡BIENVENIDO A CODECALC!")
     print("Ingrese su operación con la siguiente sintaxis: (operador numero1 numero2)")
     print("Por ejemplo: (+ 1 2)")
