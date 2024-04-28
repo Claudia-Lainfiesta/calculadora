@@ -49,7 +49,7 @@ def operacion_cuadrado(num):
 def operacion_seno(num):
     from math import sin
     from math import pi
-    #Conversión del numero
+    #Conversión del numero de radianes a grados
     numero1 = (num * pi)/180
     num_sen =float(sin(numero1))
     num_seno = round(num_sen, 5)
@@ -59,7 +59,7 @@ def operacion_seno(num):
 def operacion_coseno(num):
     from math import cos
     from math import pi
-    #Conversión del numero
+    #Conversión del numero de radianes a grados
     numero1 = (num * pi)/180
     num_cosen = cos(numero1)
     num_coseno = round(num_cosen, 5)
@@ -100,25 +100,30 @@ def operacion_residuo(num1, num2):
 
 #Subrutina --> factorial de un número
 def operacion_factorial(num):
-    #If qur valida primero que al ser 0 da resultado 1, luego si es negativo es error, de lo contrario se realiza la operación
-    if num == 0:
-        cero_f = 1
-        return cero_f
-    elif num < 0:
-        fact_negativo = "ERROR! " + str(num) + " no es un entero positivo"
-        return fact_negativo
+    if num - int(num) == 0:
+        if num == 0:
+            cero_f = 1
+            return cero_f
+        elif num < 0:
+            fact_negativo = "ERROR! " + str(num) + " no es un entero positivo."
+            return fact_negativo
+        else:
+            num_factorial = 1
+            contador = 1
+            while contador <= num:
+                num_factorial = num_factorial * contador
+                contador = contador + 1
+            return num_factorial
     else:
-        num_factorial = 1
-        contador = 1
-        while contador <= num:
-            num_factorial = num_factorial * contador
-            contador = contador + 1
-        return num_factorial
-#-----------------------------------------------------------------------------
-#SUBRUTINA DE VALIDACIÓN DE CANTIDADES DE PARENTESIS
-def verificar_parentesis(lista):
-    pila = []
+        a = "ERROR! " + str(num) + " no es un entero entero."
+        return a
 
+#-----------------------------------------------------------------------------
+#SUBRUTINA DE VALIDACIÓN DE PARENTESIS
+def verificar_parentesis(lista):
+    #Lista llamada pila
+    pila = []
+    #For que barre toda la lista y verifica que los parentesis sean correctos
     for caracter in lista:
         if caracter == '(':
             pila.append(caracter)
