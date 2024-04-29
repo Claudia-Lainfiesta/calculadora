@@ -1,3 +1,5 @@
+# Importamos el módulo re para hacer la búsqueda de espacios extra en la entrada
+import re
 # Creadores:
 # Hamlet Oswaldo Pernilla De Leon - 24007273 - BN.
 # María Claudia Lainfiesta Herrera - 24000149 - BN.
@@ -106,109 +108,123 @@ def operacion_factorial(num):
     else:
         a = "ERROR! " + str(num) + " no es un número entero."
         return a
-#SUBRUTINA DE EVALUCION DE OPERACIÓN.
+#SUBRUTINA DE EVOLUCIÓN DE OPERACIÓN.
 def evaluacion(operacion):
-    #Contadores en 0 para el for.
-    cont1 = 0
-    cont2 = 0
-    #For que cuenta la cantidad de de parentesis abiertos y cerrados.
-    for letra in operacion:
-        if letra == '(':
-            cont1 += 1
-        elif letra == ')':
-            cont2 += 1
-    #If son iguales proceder a operar.
-    if (cont1 == cont2):
-        tokens = operacion.replace('(', ' ( ').replace(')', ' ) ').split()
-    else:
-        return "ERROR! '" + str(operacion) + "' expresion no valida por paréntesis."
-    #Subrutina recursiva para operar operaciones combinadas.
-    def evaluar(tokens):
-        #If si no manda el usuario regresa error.
-        if len(tokens) == 0:
-            return None
-        token = tokens.pop(0)
-        #If valida los parentesis, luego su signo y sus operadores para saber como proceder.
-        if token == '(':
-            resultado = evaluar(tokens)
-            tokens.pop(0)
-            return resultado
-        elif token in {'+', '-', '*', '/', 'div', '%'}:
-            operador = token
-            operando1 = evaluar(tokens)
-            operando2 = evaluar(tokens)
-            #If que si el usuario no manda ningun numero devuelva error.
-            if operando1 is None or operando2 is None:
-                return "ERROR! '" + str(operacion) + "' expresion no valida, no se  ingresaron valores para operar."
-            #If que dependiendo su signo realice la operación.
-            if operador == '+':
-                operadosuma = operacion_suma(operando1, operando2)
-                return operadosuma
-            elif operador == '-':
-                operadoresta = operacion_resta(operando1, operando2)
-                return operadoresta
-            elif operador == '*':
-                operadomultiplicacion = operacion_multiplicacion(operando1, operando2)
-                return operadomultiplicacion
-            elif operador == '/':
-                operadodivision = operacion_division(operando1, operando2)
-                return operadodivision
-            elif operador == 'div':
-                operadocociente = operacion_cociente(operando1, operando2)
-                return operadocociente
-            elif operador == '%':
-                operadoresiduo = operacion_residuo(operando1, operando2)
-                return operadoresiduo
-        #IF para cada uno de las opciones de operaciones con un número.
-        elif token == 'sqroot':
-            operando = evaluar(tokens)
-            if operando is None:
-                return "ERROR! " + str(operacion) + " expresion no valida, operando faltante."
-            else:
-                operadoraiz = operacion_raiz(operando)
-                return operadoraiz
-        elif token == 'sqr':
-            operando = evaluar(tokens)
-            if operando is None:
-                return "ERROR! " + str(operacion) + " expresion no valida, operando faltante."
-            operadocuadrado = operacion_cuadrado(operando)
-            return operadocuadrado
-        elif token == 'sin':
-            operando = evaluar(tokens)
-            if operando is None:
-                return "ERROR! " + str(operacion) + " expresion no valida, operando faltante."
-            operadoseno = operacion_seno(operando)
-            return operadoseno
-        elif token == 'cos':
-            operando = evaluar(tokens)
-            if operando is None:
-                return "ERROR! " + str(operacion) + " expresion no valida, operando faltante."
-            operadocoseno = operacion_coseno(operando)
-            return operadocoseno
-        elif token == 'tan':
-            operando = evaluar(tokens)
-            if operando is None:
-                return "ERROR! " + str(operacion) + " expresion no valida, operando faltante."
-            operadotangente = operacion_tangente(operando)
-            return operadotangente
-        elif token == "!":
-            operando = evaluar(tokens)
-            if operando is None:
-                return "ERROR! " + str(operacion) + " expresion no valida, operando faltante."
-            operadofactorial = operacion_factorial(operando)
-            return operadofactorial
+    #Try que controla cuando operaciones son indefinidas.
+    try:
+        #Try que devuelve solo el número.
+        try:
+            operacion = float(operacion)
+            return(operacion)
+        except:
+            #If con librería re se validan los espacios correctamente.
+            if re.search(r'\s{2,}', operacion):
+                return "ERROR! '" + str(operacion) + "' expresión no valida, hay espacios de más en la operación."
+            if not re.search(r'\((?:[+\-*/%!]|div|tan|cos|sin|sqroot|sqr)\s', operacion):
+                return "ERROR! '" + str(operacion) + "' expresión no valida, faltan espacios o ingreso letras."
+        #Contadores en 0 para el for.
+        cont1 = 0
+        cont2 = 0
+        #For que cuenta la cantidad de de paréntesis abiertos y cerrados.
+        for letra in operacion:
+            if letra == '(':
+                cont1 += 1
+            elif letra == ')':
+                cont2 += 1
+        #If son iguales proceder a operar.
+        if (cont1 == cont2):
+            tokens = operacion.replace('(', ' ( ').replace(')', ' ) ').split()
         else:
-            #Try que maneja el error si el usuario no coloca la operacion correctamente.
-            try:
-                return float(token)
-            except ValueError:
+            return "ERROR! '" + str(operacion) + "' expresión no valida por paréntesis."
+        #Subrutina recursiva para operar operaciones combinadas.
+        def evaluar(tokens):
+            #If si no manda el usuario regresa error.
+            if len(tokens) == 0:
                 return None
-    resultado = evaluar(tokens)
-    #If que verifica si existe algun error con el input del usuario.
-    if resultado is None:
-        return "ERROR! '" + str(operacion) + "' expresion no valida, se ingresaron letras, operaciones incorrectas o parentesis mal colocados."
-    else:
-        return resultado
+            token = tokens.pop(0)
+            #If valida los paréntesis, luego su signo y sus operadores para saber como proceder.
+            if token == '(':
+                resultado = evaluar(tokens)
+                tokens.pop(0)
+                return resultado
+            elif token in {'+', '-', '*', '/', 'div', '%'}:
+                operador = token
+                operando1 = evaluar(tokens)
+                operando2 = evaluar(tokens)
+                #If que si el usuario no manda ningún numero devuelva error.
+                if operando1 is None or operando2 is None:
+                    return "ERROR! '" + str(operacion) + "' expresión no valida, no se  ingresaron valores para operar."
+                #If que dependiendo su signo realice la operación.
+                if operador == '+':
+                    operadosuma = operacion_suma(operando1, operando2)
+                    return operadosuma
+                elif operador == '-':
+                    operadoresta = operacion_resta(operando1, operando2)
+                    return operadoresta
+                elif operador == '*':
+                    operadomultiplicacion = operacion_multiplicacion(operando1, operando2)
+                    return operadomultiplicacion
+                elif operador == '/':
+                    operadodivision = operacion_division(operando1, operando2)
+                    return operadodivision
+                elif operador == 'div':
+                    operadocociente = operacion_cociente(operando1, operando2)
+                    return operadocociente
+                elif operador == '%':
+                    operadoresiduo = operacion_residuo(operando1, operando2)
+                    return operadoresiduo
+            #IF para cada uno de las opciones de operaciones con un número.
+            elif token == 'sqroot':
+                operando = evaluar(tokens)
+                if operando is None:
+                    return "ERROR! " + str(operacion) + " expresión no valida, operando faltante."
+                else:
+                    operadoraiz = operacion_raiz(operando)
+                    return operadoraiz
+            elif token == 'sqr':
+                operando = evaluar(tokens)
+                if operando is None:
+                    return "ERROR! " + str(operacion) + " expresión no valida, operando faltante."
+                operadocuadrado = operacion_cuadrado(operando)
+                return operadocuadrado
+            elif token == 'sin':
+                operando = evaluar(tokens)
+                if operando is None:
+                    return "ERROR! " + str(operacion) + " expresión no valida, operando faltante."
+                operadoseno = operacion_seno(operando)
+                return operadoseno
+            elif token == 'cos':
+                operando = evaluar(tokens)
+                if operando is None:
+                    return "ERROR! " + str(operacion) + " expresión no valida, operando faltante."
+                operadocoseno = operacion_coseno(operando)
+                return operadocoseno
+            elif token == 'tan':
+                operando = evaluar(tokens)
+                if operando is None:
+                    return "ERROR! " + str(operacion) + " expresión no valida, operando faltante."
+                operadotangente = operacion_tangente(operando)
+                return operadotangente
+            elif token == "!":
+                operando = evaluar(tokens)
+                if operando is None:
+                    return "ERROR! " + str(operacion) + " expresión no valida, operando faltante."
+                operadofactorial = operacion_factorial(operando)
+                return operadofactorial
+            else:
+                #Try que maneja el error si el usuario no coloca la operacion correctamente.
+                try:
+                    return float(token)
+                except ValueError:
+                    return None
+        resultado = evaluar(tokens)
+        #If que verifica si existe algún error con el input del usuario.
+        if resultado is None:
+            return "ERROR! '" + str(operacion) + "' expresión no valida, se ingresaron letras, operaciones incorrectas o paréntesis mal colocados."
+        else:
+            return resultado
+    except TypeError:
+        return "ERROR! '" + str(operacion) + "' MATH ERROR."
 def main():
     #Inicio de programa, información básica.
     print("CREADORES: ")
