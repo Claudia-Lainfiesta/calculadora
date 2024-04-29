@@ -1,23 +1,20 @@
 # Creadores:
 # Hamlet Oswaldo Pernilla De Leon - 24007273 - BN
 # María Claudia Lainfiesta Herrera - 24000149 - BN
-
+#--------------------------------------------------------------------------------------
 #SUBRUTINAS DE OPERACIONES DE DOS NÚMEROS
 #Subrutina --> suma de números
 def operacion_suma(num1, num2):
     suma = num1 + num2
     return suma
-
 #Subrutina --> resta de  números
 def operacion_resta(num1, num2):
     resta = num1 - num2
     return resta
-
 #Subrutina --> multiplicación de  números
 def operacion_multiplicacion(num1, num2):
     multiplicacion = num1 * num2
     return multiplicacion
-
 #Subrutina --> división de  números
 def operacion_division(num1, num2):
     #If que valida que el segundo numero 0 o no.
@@ -27,7 +24,6 @@ def operacion_division(num1, num2):
     else:
         division = num1 / num2
         return division
-
 #SUBRUTINAS DE OPERACIONES DE UN NÚMERO
 #Subrutina --> raíz de número
 def operacion_raiz(num):
@@ -39,12 +35,10 @@ def operacion_raiz(num):
     else:
         error_raiz = "ERROR! el número " + str(num) + " es indefinido por ser negativo."
         return error_raiz
-
 #Subrutina --> al cuadrado de número
 def operacion_cuadrado(num):
     num_cuadrado = num * num
     return num_cuadrado
-
 #Subrutina --> seno de número
 def operacion_seno(num):
     from math import sin
@@ -54,7 +48,6 @@ def operacion_seno(num):
     num_sen =float(sin(numero1))
     num_seno = round(num_sen, 5)
     return num_seno
-
 #Subrutina --> coseno de número
 def operacion_coseno(num):
     from math import cos
@@ -64,7 +57,6 @@ def operacion_coseno(num):
     num_cosen = cos(numero1)
     num_coseno = round(num_cosen, 5)
     return num_coseno
-
 #Subrutina --> tangente de número
 def operacion_tangente(num):
     from math import tan
@@ -76,7 +68,6 @@ def operacion_tangente(num):
     else:
         num_tangente = (operacion_seno(num)) / (operacion_coseno(num))
         return num_tangente
-
 #SUBRUTINAS DE OPERACIONES ESPECIALES
 #Subrutina --> cociente de números
 def operacion_cociente(num1, num2):
@@ -87,7 +78,6 @@ def operacion_cociente(num1, num2):
     else:
         num_cociente = num1 // num2
         return num_cociente
-
 #Subrutina --> residuo de números
 def operacion_residuo(num1, num2):
     #If que valida que el segundo numero sea 0 no
@@ -97,7 +87,6 @@ def operacion_residuo(num1, num2):
     else:
         num_residuo = num1 % num2
         return num_residuo
-
 #Subrutina --> factorial de un número
 def operacion_factorial(num):
     if num - int(num) == 0:
@@ -117,7 +106,6 @@ def operacion_factorial(num):
     else:
         a = "ERROR! " + str(num) + " no es un entero entero."
         return a
-
 #-----------------------------------------------------------------------------
 #SUBRUTINA DE VALIDACIÓN DE PARENTESIS
 def verificar_parentesis(lista):
@@ -222,6 +210,7 @@ def main():
     print("¡BIENVENIDO A CODECALC!")
     print("Ingrese su operación con la siguiente sintaxis: (operador numero1 numero2)")
     print("Por ejemplo: (+ 1 2)")
+    print("Para salir del programa ingrese la palabra 'quit'")
     print("--------------------------------------------------------------------------")
     #Ciclo infinito para que trabaje infinitamente
     while True:
