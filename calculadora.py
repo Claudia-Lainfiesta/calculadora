@@ -1,7 +1,7 @@
 # Creadores:
 # Hamlet Oswaldo Pernilla De Leon - 24007273 - BN
 # María Claudia Lainfiesta Herrera - 24000149 - BN
-#--------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
 #SUBRUTINAS DE OPERACIONES DE DOS NÚMEROS
 #Subrutina --> suma de números
 def operacion_suma(num1, num2):
@@ -43,7 +43,7 @@ def operacion_cuadrado(num):
 def operacion_seno(num):
     from math import sin
     from math import pi
-    #Conversión del numero de radianes a grados
+    #Conversión del numero
     numero1 = (num * pi)/180
     num_sen =float(sin(numero1))
     num_seno = round(num_sen, 5)
@@ -52,7 +52,7 @@ def operacion_seno(num):
 def operacion_coseno(num):
     from math import cos
     from math import pi
-    #Conversión del numero de radianes a grados
+    #Conversión del numero
     numero1 = (num * pi)/180
     num_cosen = cos(numero1)
     num_coseno = round(num_cosen, 5)
@@ -94,7 +94,7 @@ def operacion_factorial(num):
             cero_f = 1
             return cero_f
         elif num < 0:
-            fact_negativo = "ERROR! " + str(num) + " no es un entero positivo."
+            fact_negativo = "ERROR! " + str(num) + " no es un número positivo"
             return fact_negativo
         else:
             num_factorial = 1
@@ -104,113 +104,120 @@ def operacion_factorial(num):
                 contador = contador + 1
             return num_factorial
     else:
-        a = "ERROR! " + str(num) + " no es un entero entero."
+        a = "ERROR! " + str(num) + " no es un número entero"
         return a
-#-----------------------------------------------------------------------------
-#SUBRUTINA DE VALIDACIÓN DE PARENTESIS
-def verificar_parentesis(lista):
-    #Lista llamada pila
-    pila = []
-    #For que barre toda la lista y verifica que los parentesis sean correctos
-    for caracter in lista:
-        if caracter == '(':
-            pila.append(caracter)
-        elif caracter == ')':
-            if not pila:
-                return False  # Hay un ')' sin un '(' correspondiente
-            pila.pop()  # Remover '(' de la pila
-
-    return len(pila) == 0  # La pila debe estar vacía para que los paréntesis estén balanceados
-#SUBRUTINA DE VALIDACIÓN DE OPERADORES
+#SUBRUTINA DE EVALUCION DE OPERACIÓN
 def evaluacion(operacion):
-    lista = operacion.split()
-    #Almacenar en una variable el resultado de la subrutina de validación de cantidades de paréntesis
-    validacionparentesis = verificar_parentesis(lista)
-    print(lista)
-    #Si el usuario ingresa algo que no sea un numero no realizara la operación
-    try:
-        if validacionparentesis == True:
-            #IF para validar cuantos elementos tiene la lista y saber como proceder
-            if len(lista) == 1 and operacion != "quit":
-                try:
-                    operacion = float(operacion)
-                    return operacion
-                except ValueError:
-                    return "ERROR! Ingreso letras, solo se aceptan números"
-            elif len(lista) == 2 and operacion != "quit":
-                #Separación de las dos partes principales
-                parte1 = lista[0]
-                parte2 = lista[1]
-                #Separación de cada uno de los caracteres
-                parentesisO = parte1[0]
-                signo = parte1[1:]
-                num = float(parte2[:-1])
-                parentesisF = parte2[-1]
-                if parentesisO == "(" and parentesisF == ")":
-                    #IF para cada uno de las opciones de operaciones con un número
-                    if signo == "sqroot":
-                        return operacion_raiz(num)
-                    elif signo == "sqr":
-                        return operacion_cuadrado(num)
-                    elif signo == "sin":
-                        return operacion_seno(num)
-                    elif signo == "cos":
-                        return operacion_coseno(num)
-                    elif signo == "tan":
-                        return operacion_tangente(num)
-                    elif signo == "!":
-                        return operacion_factorial(num)
-                    else:
-                        return "Operación no válida."
-                else:
-                    return "Operación no válida por parentesis"
-            elif len(lista) == 3 and operacion != "quit":
-                #Separación de las tres partes principales
-                parte1 = lista[0]
-                parte2 = lista[1]
-                parte3 = lista[2]
-                #Separación de cada uno de los caracteres
-                parentesisO = parte1[0]
-                signo = parte1[1:]
-                num1 = float(parte2[0:])
-                num2 = float(parte3[:-1])
-                parentesisF = parte3[-1]
-                #print(parentesisO,signo,num1,num2,parentesisF)
-                if parentesisO == "(" and parentesisF == ")":
-                    if signo == "+":
-                        return operacion_suma(num1, num2)
-                    elif signo == "-":
-                        return operacion_resta(num1, num2)
-                    elif signo == "*":
-                        return operacion_multiplicacion(num1, num2)
-                    elif signo == "/":
-                        return operacion_division(num1, num2)
-                    elif signo == "div":
-                        return operacion_cociente(num1, num2)
-                    elif signo == "%":
-                        return operacion_residuo(num1, num2)
-                    else:
-                        return "ERROR! Operación no valida"
-                else:
-                    return "ERROR! Operación no válida por parentesis"
+    #Contadores en 0 para el for
+    cont1 = 0
+    cont2 = 0
+    #For que cuenta la cantidad de de parentesis abiertos y cerrados.
+    for letra in operacion:
+        if letra == '(':
+            cont1 += 1
+        elif letra == ')':
+            cont2 += 1
+    #If son iguales proceder a operar.
+    if (cont1 == cont2):
+        tokens = operacion.replace('(', ' ( ').replace(')', ' ) ').split()
+    else:
+        return "ERROR! Expresion no valida, error con los paréntesis"
+    #Subrutina recursiva para operar operaciones combinadas
+    def evaluar(tokens):
+        #If si no manda el usuario regresa error.
+        if len(tokens) == 0:
+            return None
+        token = tokens.pop(0)
+        #If valida los parentesis, luego su signo y sus operadores para saber como proceder.
+        if token == '(':
+            resultado = evaluar(tokens)
+            tokens.pop(0)
+            return resultado
+        elif token in {'+', '-', '*', '/', 'div', '%'}:
+            operador = token
+            operando1 = evaluar(tokens)
+            operando2 = evaluar(tokens)
+            #If que si el usuario no manda ningun numero devuelva error.
+            if operando1 is None or operando2 is None:
+                return ("ERROR! Expresion no valida, no se ingresó o ingresaron valores a operar")
+            #If que dependiendo su signo realice la operación
+            if operador == '+':
+                operadosuma = operacion_suma(operando1, operando2)
+                return operadosuma
+            elif operador == '-':
+                operadoresta = operacion_resta(operando1, operando2)
+                return operadoresta
+            elif operador == '*':
+                operadomultiplicacion = operacion_multiplicacion(operando1, operando2)
+                return operadomultiplicacion
+            elif operador == '/':
+                operadodivision = operacion_division(operando1, operando2)
+                return operadodivision
+            elif operador == 'div':
+                operadocociente = operacion_cociente(operando1, operando2)
+                return operadocociente
+            elif operador == '%':
+                operadoresiduo = operacion_residuo(operando1, operando2)
+                return operadoresiduo
+        #IF para cada uno de las opciones de operaciones con un número
+        elif token == 'sqroot':
+            operando = evaluar(tokens)
+            if operando is None:
+                return ("ERROR! Expresion no valida, falta operando")
             else:
-                return "ERROR! Operación no válida"
-        elif validacionparentesis == False:
-            return "ERROR! Los parentesis no son válidos"
-    except ValueError:
-        return "ERROR! Operación no válida."
-#-------------------------------------------------------------------------------------------
-#SUBRUTINA PRINCIPAL
+                operadoraiz = operacion_raiz(operando)
+                return operadoraiz
+        elif token == 'sqr':
+            operando = evaluar(tokens)
+            if operando is None:
+                return ("ERROR! Expresion no valida, falta operando")
+            operadocuadrado = operacion_cuadrado(operando)
+            return operadocuadrado
+        elif token == 'sin':
+            operando = evaluar(tokens)
+            if operando is None:
+                return ("ERROR! Expresion no valida, falta operando")
+            operadoseno = operacion_seno(operando)
+            return operadoseno
+        elif token == 'cos':
+            operando = evaluar(tokens)
+            if operando is None:
+                return ("ERROR! Expresion no valida, falta operando")
+            operadocoseno = operacion_coseno(operando)
+            return operadocoseno
+        elif token == 'tan':
+            operando = evaluar(tokens)
+            if operando is None:
+                return ("ERROR! Expresion no valida, falta operando")
+            operadotangente = operacion_tangente(operando)
+            return operadotangente
+        elif token == "!":
+            operando = evaluar(tokens)
+            if operando is None:
+                return("ERROR! Expresion no valida, falta opernado")
+            operadofactorial = operacion_factorial(operando)
+            return operadofactorial
+        else:
+            #Try que maneja el error si el usuario no coloca la operacion correctamente
+            try:
+                return float(token)
+            except ValueError:
+                return None
+    resultado = evaluar(tokens)
+    #If que verifica si existe algun error con el input del usuario
+    if resultado is None:
+        return "ERROR! Expresion no valida, se ingresaron letras, operaciones incorrectas o parentesis mal colocados."
+    else:
+        return resultado
 def main():
-    #Inicio de programa, información básica
+     #Inicio de programa, información básica
     print("CREADORES: ")
     print("Hamlet Oswaldo Pernilla De Leon - 24007273 - BN")
     print("María Claudia Lainfiesta Herrera - 24000149 - BN")
-    print("----------------------------------------------------")
+    print("-------------------------------------------")
     print("¡BIENVENIDO A CODECALC!")
     print("Ingrese su operación con la siguiente sintaxis: (operador numero1 numero2)")
     print("Por ejemplo: (+ 1 2)")
-    print("Para salir del programa ingrese la palabra 'quit'")
     print("--------------------------------------------------------------------------")
     #Ciclo infinito para que trabaje infinitamente
     while True:
@@ -224,5 +231,4 @@ def main():
         else:
             resultado = evaluacion(operacion)
             print("resultado>>", resultado)
-
 main()
